@@ -1,0 +1,17 @@
+{
+  "name": "OverLog",
+  "version": "0.0.1",
+  "description": "Parse server for the OverLog app",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "ejs": "2.4.1",
+    "express": "4.13.3",
+    "mongodb-runner": "3.4.0",
+    "node-env-file": "0.1.8",
+    "parse-dashboard": "1.0.18",
+    "parse-server": "2.2.22"
+  }
+}
