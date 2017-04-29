@@ -85,7 +85,7 @@ function updateLogSession(request, response) {
                 losses: losses,
                 draws: draws,
                 summary: summary
-            }).then(function () {
+            },{useMasterKey:true}).then(function () {
                 response.success();
             });
 
