@@ -132,7 +132,7 @@ Parse.Cloud.afterSave('LogSession', function(request, response) {
             wins : wins,
             draws : draws,
             losses : losses
-        }).then(function() {
+        },{useMasterKey:true}).then(function() {
             response.success();
         });
 
