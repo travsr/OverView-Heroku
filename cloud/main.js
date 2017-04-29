@@ -48,9 +48,8 @@ Parse.Cloud.beforeSave('LogEntry', function(request, response) {
     })
 });
 
-// Count up wins/draws/losses in this log session
-Parse.Cloud.afterDelete('LogEntry', function(request, response) {
 
+function updateLogSession(request, response) {
     var logSession = request.object.get('logSession');
 
     if (logSession) {
@@ -99,104 +98,15 @@ Parse.Cloud.afterDelete('LogEntry', function(request, response) {
     {
         response.success();
     }
+}
 
-});
+// Count up wins/draws/losses in this log session
+Parse.Cloud.afterDelete('LogEntry', updateLogSession);
 
 
 // Count up wins/draws/losses in this log session
-Parse.Cloud.beforeSave('LogSession', function(request, response) {
+Parse.Cloud.afterSave('LogEntry', updateLogSession);
 
 
-    var q = new Parse.Query(Parse.Object.extend('LogEntry'));
-    q.equalTo('logSession', request.object);
-    q.find({useMasterKey : true}).then(function(logEntries) {
 
-        var wins, losses, draws, summary;
-
-        summary = [];
-        wins = 0; losses = 0; draws = 0;
-
-
-        logEntries.forEach(function(entry) {
-            var result = entry.get('result');
-
-            summary.push( result );
-
-            if(result == 'win') {
-                wins++;
-            }
-            else if(result == 'loss') {
-                losses++;
-            }
-            else if(result == 'draw') {
-                draws++;
-            }
-
-        });
-
-
-        request.object.set({
-            wins : wins,
-            losses : losses,
-            draws : draws,
-            summary : summary
-        });
-
-        response.success();
-
-    }, function(err) {
-
-        response.error(err);
-    });
-
-});
-
-
-// Count up wins/draws/losses in this log session
-Parse.Cloud.beforeSave('LogSession', function(request, response) {
-
-
-    var q = new Parse.Query(Parse.Object.extend('LogEntry'));
-    q.equalTo('logSession', request.object);
-    q.find({useMasterKey : true}).then(function(logEntries) {
-
-        var wins, losses, draws, summary;
-
-        summary = [];
-        wins = 0; losses = 0; draws = 0;
-
-
-        logEntries.forEach(function(entry) {
-            var result = entry.get('result');
-
-            summary.push( result );
-
-            if(result == 'win') {
-                wins++;
-            }
-            else if(result == 'loss') {
-                losses++;
-            }
-            else if(result == 'draw') {
-                draws++;
-            }
-
-        });
-
-
-        request.object.set({
-            wins : wins,
-            losses : losses,
-            draws : draws,
-            summary : summary
-        });
-
-        response.success();
-
-    }, function(err) {
-
-        response.error(err);
-    });
-
-});
 
