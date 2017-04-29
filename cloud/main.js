@@ -108,5 +108,36 @@ Parse.Cloud.afterDelete('LogEntry', updateLogSession);
 Parse.Cloud.afterSave('LogEntry', updateLogSession);
 
 
+Parse.Cloud.afterSave('LogSession', function(request, response) {
 
+    // Tally up total results for this user
+    var user = request.object.get('user');
+
+    var q = new Parse.Query(Parse.Object.extend('LogSession'));
+    q.equalTo('user', user);
+    q.find({useMasterKey:true}).then(function(logSessions) {
+
+        var wins, losses, draws;
+        wins = 0;
+        losses = 0;
+        draws = 0;
+
+        logSessions.forEach(function(session) {
+            wins += session.get('wins') ? session.get('wins') : 0;
+            losses += session.get('losses') ? session.get('losses') : 0;
+            draws += session.get('draws') ? session.get('draws') : 0;
+        });
+
+        user.save({
+            wins : wins,
+            draws : draws,
+            losses : losses
+        }).then(function() {
+            response.success();
+        });
+
+    }, function(err) {
+        response.error(err);
+    });
+});
 
