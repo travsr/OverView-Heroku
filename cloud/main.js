@@ -34,7 +34,10 @@ Parse.Cloud.beforeSave('LogEntry', function(request, response) {
         }
 
         request.object.set({'logSession' : logSession});
-        logSession.save({lastGameDate : d},{useMasterKey:true};
+        logSession.save({
+            lastGameDate : d,
+            user : request.user
+        },{useMasterKey:true};
 
         response.success();
 
