@@ -21,7 +21,7 @@ Parse.Cloud.beforeSave('LogEntry', function(request, response) {
         var logSession;
 
         if(sessions.length == 0) {
-            var LogSession = Parse.Object.Extend('LogSession');
+            var LogSession = Parse.Object.extend('LogSession');
             logSession = new LogSession();
         }
         else {
@@ -29,7 +29,7 @@ Parse.Cloud.beforeSave('LogEntry', function(request, response) {
             var lastDate = lastSession.get('lastGameDate');
 
             if(d.getTime() - lastDate.getTime() > 1000*60*60) { // one hour has passee
-                var LogSession = Parse.Object.Extend('LogSession');
+                var LogSession = Parse.Object.extend('LogSession');
                 logSession = new LogSession();
             }
             else {
