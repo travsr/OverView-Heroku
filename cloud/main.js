@@ -92,25 +92,25 @@ function updateLogSession(request, response) {
                     draws++;
                 }
 
-                //count up on a map by map basis
-                characterNames.forEach(function(name, i) {
-                    if(!characterResults[name])
-                        characterResults[name]  = {};
-
-
-                    mapNames.forEach(function(map, j) {
-
-                        if(!characterResults[name][map])
-                            characterResults[name][map] = {}
-
-
-                        if(!characterResults[name][map][result])
-                            characterResults[name][map][result] = 0;
-
-                        characterResults[name][map][result]++;
-                    });
-
-                });
+                // //count up on a map by map basis
+                // characterNames.forEach(function(name, i) {
+                //     if(!characterResults[name])
+                //         characterResults[name]  = {};
+                //
+                //
+                //     mapNames.forEach(function(map, j) {
+                //
+                //         if(!characterResults[name][map])
+                //             characterResults[name][map] = {}
+                //
+                //
+                //         if(!characterResults[name][map][result])
+                //             characterResults[name][map][result] = 0;
+                //
+                //         characterResults[name][map][result]++;
+                //     });
+                //
+                // });
 
             });
 
@@ -158,9 +158,9 @@ Parse.Cloud.afterSave('LogSession', function(request, response) {
         draws = 0;
 
         logSessions.forEach(function(session) {
-            wins += session.get('wins') ? session.get('wins') : 0;
-            losses += session.get('losses') ? session.get('losses') : 0;
-            draws += session.get('draws') ? session.get('draws') : 0;
+            wins += session.get('win') ? session.get('win') : 0;
+            losses += session.get('loss') ? session.get('loss') : 0;
+            draws += session.get('draw') ? session.get('draw') : 0;
         });
 
         user.save({
