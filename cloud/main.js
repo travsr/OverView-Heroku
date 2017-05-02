@@ -54,9 +54,13 @@ function updateLogSession(request, response) {
 
     if (logSession) {
 
+        console.log("updating log session");
+
         var q = new Parse.Query(Parse.Object.extend('LogEntry'));
         q.equalTo('logSession', logSession);
         q.find({useMasterKey: true}).then(function (logEntries) {
+
+            console.log("finding log entries for this session");
 
             var wins, losses, draws, summary;
             var mapResults, characterResults;
@@ -68,6 +72,8 @@ function updateLogSession(request, response) {
 
             mapResults = {};
             characterResults = {};
+
+            console.log("looping through entries");
 
             logEntries.forEach(function (entry) {
                 var result = entry.get('result');
@@ -114,7 +120,7 @@ function updateLogSession(request, response) {
                 draw: draws,
                 summary: summary,
                 characterResults : characterResults
-            },{useMasterKey:true}).then(function () {
+            },{ useMasterKey : true }).then(function () {
                 response.success();
             });
 
