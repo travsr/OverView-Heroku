@@ -115,34 +115,28 @@ function updateLogSession(request, response) {
                     }
                 });
 
-
                 // count up on a map-specific basis
-                if(!mapResults[mapName]) {
+                if(!mapResults[mapName])
                     mapResults[mapName] = {};
-                }
+
+                if(!mapResults[mapName]["_all"])
+                    mapResults[mapName]["_all"] = [0,0,0];
+                if (result == 'win')
+                    mapResults[mapName]["_all"][0]++;
+                else if (result == 'loss')
+                    mapResults[mapName]["_all"][1]++;
+                else if (result == 'draw')
+                    mapResults[mapName]["_all"][2]++;
 
                 characterNames.forEach(function(name, i) {
-
                     if(!mapResults[mapName][name])
                         mapResults[mapName][name] = [0,0,0];
-
-                    if(!mapResults[mapName]["_all"])
-                        mapResults[mapName]["_all"] = [0,0,0];
-
-
-                    if (result == 'win') {
+                    if (result == 'win')
                         mapResults[mapName][name][0]++;
-                        mapResults[mapName]["_all"][0]++;
-                    }
-                    else if (result == 'loss') {
+                    else if (result == 'loss')
                         mapResults[mapName][name][1]++;
-                        mapResults[mapName]["_all"][1]++;
-                    }
-                    else if (result == 'draw') {
+                    else if (result == 'draw')
                         mapResults[mapName][name][2]++;
-                        mapResults[mapName]["_all"][2]++;
-                    }
-
                 });
 
 
