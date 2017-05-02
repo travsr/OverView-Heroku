@@ -92,25 +92,25 @@ function updateLogSession(request, response) {
                     draws++;
                 }
 
-                // //count up on a map by map basis
-                // characterNames.forEach(function(name, i) {
-                //     if(!characterResults[name])
-                //         characterResults[name]  = {};
-                //
-                //
-                //     mapNames.forEach(function(map, j) {
-                //
-                //         if(!characterResults[name][map])
-                //             characterResults[name][map] = {}
-                //
-                //
-                //         if(!characterResults[name][map][result])
-                //             characterResults[name][map][result] = 0;
-                //
-                //         characterResults[name][map][result]++;
-                //     });
-                //
-                // });
+                //count up on a map by map basis
+                characterNames.forEach(function(name, i) {
+                    if(!characterResults[name])
+                        characterResults[name]  = {};
+
+                    //
+                    // mapNames.forEach(function(map, j) {
+                    //
+                    //     if(!characterResults[name][map])
+                    //         characterResults[name][map] = {}
+                    //
+                    //
+                    //     if(!characterResults[name][map][result])
+                    //         characterResults[name][map][result] = 0;
+                    //
+                    //     characterResults[name][map][result]++;
+                    // });
+
+                });
 
             });
 
