@@ -59,16 +59,23 @@ function updateLogSession(request, response) {
         q.find({useMasterKey: true}).then(function (logEntries) {
 
             var wins, losses, draws, summary;
+            var mapResults, characterResults;
 
             summary = [];
             wins = 0;
             losses = 0;
             draws = 0;
 
+            mapResults = {};
+            characterResults = {};
+
             logEntries.forEach(function (entry) {
                 var result = entry.get('result');
+                var characterNames = entry.get('characterNames');
+                var mapNames = entry.get('mapNames');
                 summary.push(result);
 
+                // count up generic wins/losses/draws
                 if (result == 'win') {
                     wins++;
                 }
@@ -78,13 +85,35 @@ function updateLogSession(request, response) {
                 else if (result == 'draw') {
                     draws++;
                 }
+
+                //count up on a map by map basis
+                characterNames.forEach(function(name, i) {
+                    if(!characterResults[name])
+                        characterResults[name]  = {};
+
+
+                    mapNames.forEach(function(map, j) {
+
+                        if(!characterResults[name][map])
+                            characterResults[name][map] = {}
+
+
+                        if(!characterResults[name][map][result])
+                            characterResults[name][map][result] = 0;
+
+                        characterResults[name][map][result]++;
+                    });
+
+                });
+
             });
 
             logSession.save({
-                wins: wins,
-                losses: losses,
-                draws: draws,
-                summary: summary
+                win: wins,
+                loss: losses,
+                draw: draws,
+                summary: summary,
+                characterResults : characterResults
             },{useMasterKey:true}).then(function () {
                 response.success();
             });
@@ -129,9 +158,9 @@ Parse.Cloud.afterSave('LogSession', function(request, response) {
         });
 
         user.save({
-            wins : wins,
-            draws : draws,
-            losses : losses
+            win : wins,
+            draw : draws,
+            loss : losses
         },{useMasterKey:true}).then(function() {
             response.success();
         });
