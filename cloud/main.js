@@ -100,8 +100,7 @@ function updateLogSession(request, response) {
                         characterResults[name]  = {};
 
                     if(!characterResults[name][mapName])
-                        characterResults[name][mapName] = {}
-
+                        characterResults[name][mapName] = {};
 
                     if(result) {
                         if (!characterResults[name][mapName][result])
