@@ -34,11 +34,9 @@ Parse.Cloud.beforeSave('LogEntry', function(request, response) {
             }
         }
 
-
         console.log("Saving log session");
         request.object.set({'logSession' : logSession});
         return logSession.save({lastGameDate : d, user : request.user},{useMasterKey:true});
-
 
     }).then(function() {
         response.success();
@@ -98,17 +96,22 @@ function updateLogSession(request, response) {
                     if(!characterResults[name])
                         characterResults[name]  = {};
 
+                    if(!characterResults[name]["_all"])
+                        characterResults[name]["_all"] = [0,0,0];
                     if(!characterResults[name][mapName])
-                        characterResults[name][mapName] = [0,0,0];
+                        characterResults[name][mapName] = [0, 0, 0];
 
                     if (result == 'win') {
                         characterResults[name][mapName][0]++;
+                        characterResults[name]["_all"][0]++;
                     }
                     else if (result == 'loss') {
                         characterResults[name][mapName][1]++;
+                        characterResults[name]["_all"][1]++;
                     }
                     else if (result == 'draw') {
                         characterResults[name][mapName][2]++;
+                        characterResults[name]["_all"][2]++;
                     }
                 });
 
@@ -120,18 +123,24 @@ function updateLogSession(request, response) {
 
                 characterNames.forEach(function(name, i) {
 
-                    if(!mapResults[mapName][name]) {
+                    if(!mapResults[mapName][name])
                         mapResults[mapName][name] = [0,0,0];
-                    }
+
+                    if(!mapResults[mapName]["_all"])
+                        mapResults[mapName]["_all"] = [0,0,0];
+
 
                     if (result == 'win') {
                         mapResults[mapName][name][0]++;
+                        mapResults[mapName]["_all"][0]++;
                     }
                     else if (result == 'loss') {
                         mapResults[mapName][name][1]++;
+                        mapResults[mapName]["_all"][1]++;
                     }
                     else if (result == 'draw') {
                         mapResults[mapName][name][2]++;
+                        mapResults[mapName]["_all"][2]++;
                     }
 
                 });
