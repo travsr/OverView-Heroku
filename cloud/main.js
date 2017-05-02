@@ -78,8 +78,10 @@ function updateLogSession(request, response) {
             logEntries.forEach(function (entry) {
                 var result = entry.get('result');
                 var characterNames = entry.get('characterNames');
-                var mapNames = entry.get('mapNames');
-                summary.push(result);
+                var mapName = entry.get('mapName');
+
+                if(result)
+                    summary.push(result);
 
                 // count up generic wins/losses/draws
                 if (result == 'win') {
@@ -97,18 +99,16 @@ function updateLogSession(request, response) {
                     if(!characterResults[name])
                         characterResults[name]  = {};
 
-                    //
-                    // mapNames.forEach(function(map, j) {
-                    //
-                    //     if(!characterResults[name][map])
-                    //         characterResults[name][map] = {}
-                    //
-                    //
-                    //     if(!characterResults[name][map][result])
-                    //         characterResults[name][map][result] = 0;
-                    //
-                    //     characterResults[name][map][result]++;
-                    // });
+                    if(!characterResults[name][mapName])
+                        characterResults[name][mapName] = {}
+
+
+                    if(result) {
+                        if (!characterResults[name][mapName][result])
+                            characterResults[name][mapName][result] = 0;
+
+                        characterResults[name][mapName][result]++;
+                    }
 
                 });
 
