@@ -94,22 +94,50 @@ function updateLogSession(request, response) {
                     draws++;
                 }
 
-                //count up on a map by map basis
+                //count up on a character-specific basis
                 characterNames.forEach(function(name, i) {
                     if(!characterResults[name])
                         characterResults[name]  = {};
 
                     if(!characterResults[name][mapName])
-                        characterResults[name][mapName] = {};
+                        characterResults[name][mapName] = [0,0,0];
 
-                    if(result) {
-                        if (!characterResults[name][mapName][result])
-                            characterResults[name][mapName][result] = 0;
+                    if (result == 'win') {
+                        characterResults[name][mapName][0]++;
+                    }
+                    else if (result == 'loss') {
+                        characterResults[name][mapName][1]++;
+                    }
+                    else if (result == 'draw') {
+                        characterResults[name][mapName][2]++;
+                    }
+                });
 
-                        characterResults[name][mapName][result]++;
+
+                // count up on a map-specific basis
+                if(!mapResults[mapName]) {
+                    mapResults[mapName] = {};
+                }
+
+                characterNames.forEach(function(name, i) {
+
+                    if(!mapResults[mapName][name]) {
+                        mapResults[mapName][name] = [0,0,0];
+                    }
+
+                    if (result == 'win') {
+                        mapResults[mapName][name][0]++;
+                    }
+                    else if (result == 'loss') {
+                        mapResults[mapName][name][1]++;
+                    }
+                    else if (result == 'draw') {
+                        mapResults[mapName][name][2]++;
                     }
 
                 });
+
+
 
             });
 
@@ -118,7 +146,8 @@ function updateLogSession(request, response) {
                 loss: losses,
                 draw: draws,
                 summary: summary,
-                characterResults : characterResults
+                characterResults : characterResults,
+                mapResults : mapResults
             },{ useMasterKey : true }).then(function () {
                 response.success();
             });
