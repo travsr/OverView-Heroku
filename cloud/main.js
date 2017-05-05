@@ -70,8 +70,6 @@ function updateLogSession(request, response) {
             mapResults = {};
             characterResults = {};
 
-            console.log("looping through entries");
-
             logEntries.forEach(function (entry) {
                 var result = entry.get('result');
                 var characterNames = entry.get('characterNames');
@@ -159,8 +157,7 @@ function updateLogSession(request, response) {
             response.error(err);
         });
     }
-    else
-    {
+    else {
         response.success();
     }
 }
@@ -168,10 +165,8 @@ function updateLogSession(request, response) {
 // Count up wins/draws/losses in this log session
 Parse.Cloud.afterDelete('LogEntry', updateLogSession);
 
-
 // Count up wins/draws/losses in this log session
 Parse.Cloud.afterSave('LogEntry', updateLogSession);
-
 
 Parse.Cloud.afterSave('LogSession', function(request, response) {
 
@@ -191,12 +186,41 @@ Parse.Cloud.afterSave('LogSession', function(request, response) {
             wins += session.get('win') ? session.get('win') : 0;
             losses += session.get('loss') ? session.get('loss') : 0;
             draws += session.get('draw') ? session.get('draw') : 0;
+
+            var allMapResults = user.get('mapResults') ? user.get('mapResults') : {};
+            var allCharacterResults = user.get('characterResults') ? user.get('characterResults') : {};
+
+            var mapResults = session.get('mapResults');
+            var characterResults = session.get('characterResults');
+
+            for(mapName in mapResults) {
+                var map = mapResults[mapName];
+                for(characterName in map) {
+
+                    var record = map[characterName];
+
+
+                    if(!allMapResults[mapName])
+                        allMapResults[mapName] = {};
+
+                    if(!allMapResults[mapName][characterName])
+                        allMapResults[mapName][characterName] = [0,0,0];
+
+                    allMapResults[mapName][characterName][0] += record[0];
+                    allMapResults[mapName][characterName][1] += record[1];
+                    allMapResults[mapName][characterName][2] += record[2];
+
+                }
+
+            }
+
         });
 
         user.save({
             win : wins,
             draw : draws,
-            loss : losses
+            loss : losses,
+            mapResults : allMapResults
         },{useMasterKey:true}).then(function() {
             response.success();
         });
@@ -205,4 +229,7 @@ Parse.Cloud.afterSave('LogSession', function(request, response) {
         response.error(err);
     });
 });
+
+
+
 
