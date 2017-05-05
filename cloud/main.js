@@ -182,13 +182,15 @@ Parse.Cloud.afterSave('LogSession', function(request, response) {
         losses = 0;
         draws = 0;
 
+        var allMapResults = user.get('mapResults') ? user.get('mapResults') : {};
+        var allCharacterResults = user.get('characterResults') ? user.get('characterResults') : {};
+
         logSessions.forEach(function(session) {
             wins += session.get('win') ? session.get('win') : 0;
             losses += session.get('loss') ? session.get('loss') : 0;
             draws += session.get('draw') ? session.get('draw') : 0;
 
-            var allMapResults = user.get('mapResults') ? user.get('mapResults') : {};
-            var allCharacterResults = user.get('characterResults') ? user.get('characterResults') : {};
+
 
             var mapResults = session.get('mapResults');
             var characterResults = session.get('characterResults');
