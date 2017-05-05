@@ -201,7 +201,6 @@ Parse.Cloud.afterSave('LogSession', function(request, response) {
 
                     var record = map[characterName];
 
-
                     if(!allMapResults[mapName])
                         allMapResults[mapName] = {};
 
@@ -211,9 +210,25 @@ Parse.Cloud.afterSave('LogSession', function(request, response) {
                     allMapResults[mapName][characterName][0] += record[0];
                     allMapResults[mapName][characterName][1] += record[1];
                     allMapResults[mapName][characterName][2] += record[2];
-
                 }
+            }
 
+            for(charName in characterResults) {
+                var character = characterResults[mapName];
+                for(mapName in character) {
+
+                    var record = character[mapName];
+
+                    if(!allCharacterResults[charName])
+                        allCharacterResults[charName] = {};
+
+                    if(!allCharacterResults[charName][mapName])
+                        allCharacterResults[charName][mapName] = [0,0,0];
+
+                    allCharacterResults[charName][mapName][0] += record[0];
+                    allCharacterResults[charName][mapName][1] += record[1];
+                    allCharacterResults[charName][mapName][2] += record[2];
+                }
             }
 
         });
@@ -222,7 +237,8 @@ Parse.Cloud.afterSave('LogSession', function(request, response) {
             win : wins,
             draw : draws,
             loss : losses,
-            mapResults : allMapResults
+            mapResults : allMapResults,
+            characterResults : allCharacterResults
         },{useMasterKey:true}).then(function() {
             response.success();
         });
