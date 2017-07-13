@@ -213,6 +213,7 @@ Parse.Cloud.afterSave('LogSession', function(request, response) {
                 }
             }
 
+
             for(charName in characterResults) {
                 var character = characterResults[charName];
                 for(mapName in character) {
