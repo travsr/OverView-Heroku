@@ -17,12 +17,12 @@ if (!databaseUri) { console.log('DATABASE_URI not specified, falling back to loc
 var api = new ParseServer({
     databaseURI   : databaseUri || 'mongodb://localhost:27017/dev',
     cloud         : process.env.CLOUD_CODE_MAIN || __dirname + '/cloud/main.js',
-    appId         : process.env.APP_ID || 'OverLog',
-    masterKey     : process.env.MASTER_KEY || 'OverLog1234', //Add your master key here. Keep it secret!
+    appId         : process.env.APP_ID || 'OverView',
+    masterKey     : process.env.MASTER_KEY || 'OverView1234', //Add your master key here. Keep it secret!
     serverURL     : process.env.SERVER_URL || __dirname + '/parse',  // Don't forget to change to https if needed
     // The email adapter and settings
     verifyUserEmails: false,
-    publicServerURL: 'https://overlog.herokuapp.com/parse',
+    publicServerURL: 'https://overviewapp.herokuapp.com/parse',
     appName: process.env.APP_NAME,
     liveQuery     : {
         classNames: ["Posts", "Comments"] // List of classes to support for query subscriptions
