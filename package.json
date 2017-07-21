@@ -1,5 +1,5 @@
 {
-  "name": "OverLog",
+  "name": "OverView",
   "version": "0.0.1",
   "description": "Parse server for the OverLog app",
   "main": "index.js",

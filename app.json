@@ -1,5 +1,5 @@
 {
-  "name": "OverLog",
+  "name": "OverView",
   "description": "Parse server for the overwatch game logs app",
   "repository": "https://github.com/heroku/node-js-getting-started",
   "logo": "http://node-js-sample.herokuapp.com/node.svg",

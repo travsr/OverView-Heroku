@@ -37,14 +37,14 @@ var dashboard = new ParseDashboard({
     "apps": [
         {
             "serverURL": serverUrl,  // Don't forget to change to https if needed
-            "appId": process.env.APP_ID || 'OverLog',
-            "masterKey": process.env.MASTER_KEY || 'OverLog1234',
-            "appName": "overlog"
+            "appId": process.env.APP_ID || 'OverView',
+            "masterKey": process.env.MASTER_KEY || 'OverView1234',
+            "appName": "overview"
         }
     ],
     "users" : [
         {
-            "user" : "overlogadmin",
+            "user" : "overviewadmin",
             "pass" : "bronz3plays!"
         }
     ]
