@@ -39,13 +39,15 @@ var dashboard = new ParseDashboard({
             "serverURL": serverUrl,  // Don't forget to change to https if needed
             "appId": process.env.APP_ID || 'OverView',
             "masterKey": process.env.MASTER_KEY || 'OverView1234',
-            "appName": "overview"
+            "appName": "OverView"
+
         }
     ],
     "users" : [
         {
             "user" : "overviewadmin",
             "pass" : "bronz3plays!"
+
         }
     ]
 }, allowInsecureHttp);
