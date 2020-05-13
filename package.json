@@ -7,7 +7,7 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "ejs": "2.4.1",
+    "ejs": "3.1.2",
     "express": "4.13.3",
     "mongodb-runner": "3.4.0",
     "node-env-file": "0.1.8",
