@@ -12,7 +12,7 @@
     "mongodb-runner": "3.4.0",
     "node-env-file": "0.1.8",
     "parse-dashboard": "1.0.25",
-    "parse-server": "2.3.8"
+    "parse-server": "4.2.0"
   },
   "engines": {
     "node": ">=4.3"
