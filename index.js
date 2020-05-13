@@ -71,18 +71,14 @@ app.use(mountPath, api);
 // Parse Server plays nicely with the rest of your web routes
 app.get('/', function(req, res) {
     res.status(200).send('I dream of being a website. Please star the parse-server repo on GitHub!');
-    //res.redirect('https://overlog.herokuapp.com/PetTutorRT/');
 });
 
 var port = process.env.PORT || 5000;
 var httpServer = require('http').createServer(app);
 httpServer.listen(port, function() {
-    console.log('OverLog ' + port + '.');
+    console.log('OverView ' + port + '.');
     console.log(serverUrl);
 });
 
 // This will enable the Live Query real-time server
 ParseServer.createLiveQueryServer(httpServer);
-
-
-
